@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
 router.post('/event', function(req, res, next) {
   console.log(req.body);
   res.send('/flock/event called');
@@ -23,3 +22,4 @@ router.get('/extract-entities', function(req, res, next) {
 });
 
 module.exports = router;
+

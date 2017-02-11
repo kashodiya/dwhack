@@ -6,13 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var flockRoute = require('./routes/flock');
+var flock = require('./routes/flock');
 var watson = require('./watson');
 
-var flock = require('flockos');
-
-flock.setAppId('3a805bd2-0714-4a00-b491-cb10469858b3');
-flock.setAppSecret('b9538dd7-bcae-4221-97a6-a3805214009a');
+var flockos = require('flockos');
+flockos.setAppId('3a805bd2-0714-4a00-b491-cb10469858b3');
+flockos.setAppSecret('b9538dd7-bcae-4221-97a6-a3805214009a');
 
 var app = express();
 
@@ -28,17 +27,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.disable('etag');
-app.use(flock.events.tokenVerifier);
+//app.use(flock.events.tokenVerifier);
 
 
 app.use(function(req, res, next) {
   req.watson = watson;
-  req.flock = flock;
+  req.flockos = flockos;
   next();
 });
 
 app.use('/', index);
-app.use('/flock', flockRoute);
+app.use('/flock', flock);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
